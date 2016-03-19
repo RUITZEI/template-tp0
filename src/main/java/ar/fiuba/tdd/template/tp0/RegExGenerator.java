@@ -13,6 +13,7 @@ public class RegExGenerator {
 
     // TODO: Uncomment parameters
     public List<String> generate(/*String regEx, int numberOfResults*/) {
+        System.out.println("Test for travis");
         return new ArrayList<String>() {
             {
                 add("a");
