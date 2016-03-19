@@ -32,7 +32,7 @@ public class RegExGeneratorTest {
 //    }
 
     @Test
-    public void testEscapedCharacters(){
+    public void testEscapedCharacters() {
         assertTrue(validate("\\.\\*asd", 1));
     }
 

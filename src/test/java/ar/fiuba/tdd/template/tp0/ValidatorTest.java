@@ -13,8 +13,9 @@ public class ValidatorTest {
 
 
     private Validator validator = new Validator();
+
     @Test
-    public void testShouldReturnTrueIfSpecialCharactersAreFound(){
+    public void testShouldReturnTrueIfSpecialCharactersAreFound() {
         assertTrue(validator.hasSpecialCharacters("asd.123"));
         assertTrue(validator.hasSpecialCharacters("?"));
         assertTrue(validator.hasSpecialCharacters("[asd]"));
@@ -24,13 +25,13 @@ public class ValidatorTest {
     }
 
     @Test
-    public void testShouldReturnFalseIfNoSpecialCharactersAreFound(){
+    public void testShouldReturnFalseIfNoSpecialCharactersAreFound() {
         assertFalse(validator.hasSpecialCharacters("Heywhatsup"));
         assertFalse(validator.hasSpecialCharacters("Hey man!"));
     }
 
     @Test
-    public void testShouldReturnTrueIfSpecialCharactersAreEscaped(){
+    public void testShouldReturnTrueIfSpecialCharactersAreEscaped() {
         assertTrue(validator.hasSpecialCharactersEscaped("Hello \\*my friend"));
         assertTrue(validator.hasSpecialCharactersEscaped("Hello \\+my friend"));
         assertTrue(validator.hasSpecialCharactersEscaped("\\[]Hello my friend"));
@@ -39,14 +40,14 @@ public class ValidatorTest {
 
 
     @Test
-    public void testHasAllSpecialCharactersEscaped(){
+    public void testHasAllSpecialCharactersEscaped() {
         assertTrue(validator.hasAllSpecialCharactersEscaped("Hey\\.there\\*buddy\\["));
         assertFalse(validator.hasAllSpecialCharactersEscaped("\\@"));
         assertFalse(validator.hasAllSpecialCharactersEscaped("Hey\\.there\\*buddy\\[]]"));
     }
 
     @Test
-    public void testShouldReturnFalseIfSpecialCharactersAreNotEscaped(){
+    public void testShouldReturnFalseIfSpecialCharactersAreNotEscaped() {
         assertFalse(validator.hasSpecialCharactersEscaped("Hello my friend."));
         assertFalse(validator.hasSpecialCharactersEscaped("Hello *my friend"));
         assertFalse(validator.hasSpecialCharactersEscaped("Hello +my friend"));
@@ -54,7 +55,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void testShouldMatchLastEscapedCharacted(){
+    public void testShouldMatchLastEscapedCharacted() {
         assertEquals("*", validator.getLastEscapedSpecialCharacter("hola como est \\+as\\*"));
         assertEquals("[", validator.getLastEscapedSpecialCharacter("hola como est \\.as\\["));
         assertEquals("]", validator.getLastEscapedSpecialCharacter("hola como est \\+as\\]"));
@@ -63,7 +64,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void testSpecialCharactersCount(){
+    public void testSpecialCharactersCount() {
         assertEquals(2, validator.getSpecialCharacterCount("** asd asda sd"));
         assertEquals(4, validator.getSpecialCharacterCount("** as]d asd?a sd"));
         assertEquals(3, validator.getSpecialCharacterCount("** asd as]da sd"));
@@ -72,7 +73,7 @@ public class ValidatorTest {
     }
 
     @Test
-    public void testSpecialEscapedCharacterCount(){
+    public void testSpecialEscapedCharacterCount() {
         assertEquals(2, validator.getSpecialCharactersEscapedCount("***\\*\\+."));
         assertEquals(4, validator.getSpecialCharactersEscapedCount("\\[\\][\\*\\+."));
         assertNotEquals(6, validator.getSpecialCharactersEscapedCount("[][\\*\\+."));

@@ -13,13 +13,20 @@ public class Patterns {
     private static final String SPECIAL_CHARS_PATTERN = ".*[\\.\\*\\+\\?\\[\\]].*";
     private static final String SPECIAL_CHARS_CAPTURE_PATTERN = ".*([\\.\\*\\+\\?\\[\\]]).*";
 
+    private static final String SPECIAL_PREFIX = ".*[";
+    private static final String SPECIAL_POSTFIX = "].*";
+
+    private static final String ESCAPED_SPECIAL_PREFIX = ".*\\\\[";
+
+    private static final String CAPTURE_ESCAPED_SPECIAL_PREFIX = ".*\\\\([";
+    private static final String CAPTURE_POSTFIX = "]).*";
+
+    private static final String CAPTURE_SPECIAL_PREFIX = ".*([";
+
     private ArrayList<String> specialChars;
 
-
-    /**
-     * You should add all the special characters here
-     */
-    private ArrayList<String> getSpecialChars(){
+    // Should add all the special chars here.
+    private ArrayList<String> getSpecialChars() {
         return new ArrayList<String>() {
             {
                 add("*");
@@ -36,51 +43,34 @@ public class Patterns {
         this.specialChars = getSpecialChars();
     }
 
-    public String getSpecialCharsPattern(){
+    public String getSpecialCharsPattern() {
+        return getAbstractPattern(SPECIAL_PREFIX, SPECIAL_POSTFIX);
+    }
+
+    public String getSpecialCharsEscappedPattern() {
+        return getAbstractPattern(ESCAPED_SPECIAL_PREFIX, SPECIAL_POSTFIX);
+    }
+
+    public String getSpecialCharsEscapedCapturePattern() {
+        return getAbstractPattern(CAPTURE_ESCAPED_SPECIAL_PREFIX, CAPTURE_POSTFIX);
+    }
+
+    public String getAbstractPattern(String prefix, String postfix) {
         StringBuilder sb = new StringBuilder();
-        sb.append(".*[");
-        for (String specialChar : specialChars){
+        sb.append(prefix);
+        for (String specialChar : specialChars) {
             sb.append("\\" + specialChar);
         }
-        sb.append("].*");
+        sb.append(postfix);
 
         return sb.toString();
     }
 
-    public String getSpecialCharsEscappedPattern(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(".*\\\\[");
-        for (String specialChar : specialChars){
-            sb.append("\\" + specialChar);
-        }
-        sb.append("].*");
-
-        return sb.toString();
+    public String getSpecialCharsCapturePattern() {
+        return getAbstractPattern(CAPTURE_SPECIAL_PREFIX, CAPTURE_POSTFIX);
     }
 
-    public String getSpecialCharsEscapedCapturePattern(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(".*\\\\([");
-        for (String specialChar : specialChars){
-            sb.append("\\" + specialChar);
-        }
-        sb.append("]).*");
-
-        return sb.toString();
-    }
-
-    public String getSpecialCharsCapturePattern(){
-        StringBuilder sb = new StringBuilder();
-        sb.append(".*([");
-        for (String specialChar : specialChars){
-            sb.append("\\" + specialChar);
-        }
-        sb.append("]).*");
-
-        return sb.toString();
-    }
-
-    public ArrayList<String> getSpecialCharacters(){
+    public ArrayList<String> getSpecialCharacters() {
         return this.specialChars;
     }
 

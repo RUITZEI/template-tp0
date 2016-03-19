@@ -16,9 +16,13 @@ public class RegExGenerator {
 
     // TODO: Uncomment parameters
     public List<String> generate(String regEx, int numberOfResults) {
+        if (numberOfResults < maxLength) {
+            System.out.println("Number of results: " + numberOfResults);
+        }
+
         String generatedString = "";
 
-        if (shouldRemoveBackSlashes(regEx)){
+        if (shouldRemoveBackSlashes(regEx)) {
             generatedString = getRegExWithBackSlashesRemoved(regEx);
         }
 
@@ -28,11 +32,11 @@ public class RegExGenerator {
         return arrayList;
     }
 
-    private String getRegExWithBackSlashesRemoved(String regExp){
+    private String getRegExWithBackSlashesRemoved(String regExp) {
         return regExp.replaceAll("\\\\", "");
     }
 
-    private boolean shouldRemoveBackSlashes(String regExp){
+    private boolean shouldRemoveBackSlashes(String regExp) {
         // no special characters or every spacial character escaped.
         return (validator.hasAllSpecialCharactersEscaped(regExp)
                 || !validator.hasSpecialCharacters(regExp));
