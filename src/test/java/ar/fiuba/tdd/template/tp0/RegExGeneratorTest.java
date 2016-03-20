@@ -26,20 +26,20 @@ public class RegExGeneratorTest {
                     (item1, item2) -> item1 && item2);
     }
 
-//    @Test
-//    public void testAnyCharacter() {
-//        assertTrue(validate(".", 1));
-//    }
+    @Test
+    public void testAnyCharacter() {
+        assertTrue(validate(".", 1));
+    }
 
     @Test
     public void testEscapedCharacters() {
         assertTrue(validate("\\.\\*asd", 1));
     }
 
-//    @Test
-//    public void testMultipleCharacters() {
-//        assertTrue(validate("...", 1));
-//    }
+    @Test
+    public void testMultipleCharacters() {
+        assertTrue(validate("...", 1));
+    }
 
     @Test
     public void testLiteral() {
@@ -55,11 +55,11 @@ public class RegExGeneratorTest {
         assertTrue(validate("\\[Joh[asd]*h[kjds]*n[asdsda]*y[asd]+", 1));
     }
 
-//    @Test
-//    public void testLiteralDotCharacter() {
-//        assertTrue(validate("\\@..", 1));
-//    }
-//
+    @Test
+    public void testLiteralDotCharacter() {
+        assertTrue(validate("\\@..", 1));
+    }
+
 //    @Test
 //    public void testZeroOrOneCharacter() {
 //        assertTrue(validate("\\@.h?", 1));

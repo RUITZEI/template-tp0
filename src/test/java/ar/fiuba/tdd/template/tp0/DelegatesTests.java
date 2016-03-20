@@ -1,10 +1,12 @@
 package ar.fiuba.tdd.template.tp0;
 
 import ar.fiuba.tdd.template.tp0.delegates.BracketsDelegate;
+import ar.fiuba.tdd.template.tp0.utils.CharUtils;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static ar.fiuba.tdd.template.tp0.utils.CharUtils.getCharacterPosition;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
@@ -25,16 +27,16 @@ public class DelegatesTests {
 
     @Test
     public void testCharacterFinder() {
-        assertEquals(3, bracketsDelegate.getCharacterPosition("asd[", '['));
-        assertEquals(3, bracketsDelegate.getCharacterPosition("asd]", ']'));
-        assertEquals(-1, bracketsDelegate.getCharacterPosition("asd[", '*'));
-        assertEquals(3, bracketsDelegate.getCharacterPosition("asd[asdasd[asdas]", '['));
-        assertEquals(16, bracketsDelegate.getCharacterPosition("asd[asdasd[asdas]]", ']'));
-        assertEquals(11, bracketsDelegate.getCharacterPosition("asd" + "\\" + "[asdasd[asdas]]", '['));
-        assertEquals(13, bracketsDelegate.getCharacterPosition("asd" + "\\" + "[asd\\[asd[asdas]]", '['));
-        assertEquals(8, bracketsDelegate.getCharacterPosition("asd\\[asd[asd[asdas]]", '['));
-        assertEquals(-1, bracketsDelegate.getCharacterPosition("asd" + "\\" + "[asd\\[asd\\[asdas]]", '['));
-        assertEquals(8, bracketsDelegate.getCharacterPosition("\\[Johhny[asd]*", '['));
+        assertEquals(3, getCharacterPosition("asd[", '['));
+        assertEquals(3, getCharacterPosition("asd]", ']'));
+        assertEquals(-1, getCharacterPosition("asd[", '*'));
+        assertEquals(3, getCharacterPosition("asd[asdasd[asdas]", '['));
+        assertEquals(16, getCharacterPosition("asd[asdasd[asdas]]", ']'));
+        assertEquals(11, getCharacterPosition("asd" + "\\" + "[asdasd[asdas]]", '['));
+        assertEquals(13, getCharacterPosition("asd" + "\\" + "[asd\\[asd[asdas]]", '['));
+        assertEquals(8, getCharacterPosition("asd\\[asd[asd[asdas]]", '['));
+        assertEquals(-1, getCharacterPosition("asd" + "\\" + "[asd\\[asd\\[asdas]]", '['));
+        assertEquals(8, getCharacterPosition("\\[Johhny[asd]*", '['));
     }
 
     @Test

@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.template.tp0;
 
 import ar.fiuba.tdd.template.tp0.delegates.BracketsDelegate;
+import ar.fiuba.tdd.template.tp0.delegates.DotDelegate;
 import ar.fiuba.tdd.template.tp0.validator.Validator;
 
 import java.util.ArrayList;
@@ -21,11 +22,24 @@ public class RegExGenerator {
         if (numberOfResults < maxLength) {
             System.out.println("Number of results: " + numberOfResults);
         }
+        String generatedString = regEx;
+        boolean shouldContinue = true;
 
-        String generatedString = getRegExWithBackSlashesRemoved(regEx);
-        BracketsDelegate bracketsDelegate = new BracketsDelegate();
-        generatedString = bracketsDelegate.handleBrackets(generatedString);
-        generatedString = getRegExWithBackSlashesRemoved(generatedString);
+        if (shouldRemoveBackSlashes(regEx)) {
+            generatedString = getRegExWithBackSlashesRemoved(regEx);
+            shouldContinue = false;
+        }
+        if (shouldContinue) {
+            BracketsDelegate bracketsDelegate = new BracketsDelegate();
+            generatedString = bracketsDelegate.handleBrackets(generatedString);
+
+            DotDelegate dotDelegate = new DotDelegate();
+            generatedString = dotDelegate.handleDot(generatedString);
+
+            if (shouldRemoveBackSlashes(generatedString)) {
+                generatedString = getRegExWithBackSlashesRemoved(generatedString);
+            }
+        }
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(generatedString);
@@ -34,11 +48,7 @@ public class RegExGenerator {
     }
 
     private String getRegExWithBackSlashesRemoved(String regExp) {
-        if (shouldRemoveBackSlashes(regExp)) {
             return regExp.replaceAll("\\\\", "");
-        }
-
-        return regExp;
     }
 
     private boolean shouldRemoveBackSlashes(String regExp) {
