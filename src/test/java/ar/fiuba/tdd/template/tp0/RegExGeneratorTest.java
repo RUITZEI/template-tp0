@@ -46,6 +46,15 @@ public class RegExGeneratorTest {
         assertTrue(validate("\\@", 1));
     }
 
+    @Test
+    public void testBracketsRegex() {
+        assertTrue(validate("[asd]*", 1));
+        assertTrue(validate("\\[Johhny[asd]*", 1));
+        assertTrue(validate("\\[Joh\\[hn\\[y[asd]+", 1));
+        assertTrue(validate("\\[Joh[a]hny[asd]+", 1));
+        assertTrue(validate("\\[Joh[asd]*h[kjds]*n[asdsda]*y[asd]+", 1));
+    }
+
 //    @Test
 //    public void testLiteralDotCharacter() {
 //        assertTrue(validate("\\@..", 1));
@@ -56,13 +65,13 @@ public class RegExGeneratorTest {
 //        assertTrue(validate("\\@.h?", 1));
 //    }
 
-//    @Test
-//    public void testCharacterSet() {
-//        assertTrue(validate("[abc]", 1));
-//    }
-//
-//    @Test
-//    public void testCharacterSetWithQuantifiers() {
-//        assertTrue(validate("[abc]+", 1));
-//    }
+    @Test
+    public void testCharacterSet() {
+        assertTrue(validate("[abc]", 1));
+    }
+
+    @Test
+    public void testCharacterSetWithQuantifiers() {
+        assertTrue(validate("[abc]+", 1));
+    }
 }

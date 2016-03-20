@@ -1,11 +1,13 @@
 package ar.fiuba.tdd.template.tp0;
 
+import ar.fiuba.tdd.template.tp0.delegates.BracketsDelegate;
 import ar.fiuba.tdd.template.tp0.validator.Validator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class RegExGenerator {
+
     private int maxLength;
     private Validator validator;
 
@@ -20,11 +22,10 @@ public class RegExGenerator {
             System.out.println("Number of results: " + numberOfResults);
         }
 
-        String generatedString = "";
-
-        if (shouldRemoveBackSlashes(regEx)) {
-            generatedString = getRegExWithBackSlashesRemoved(regEx);
-        }
+        String generatedString = getRegExWithBackSlashesRemoved(regEx);
+        BracketsDelegate bracketsDelegate = new BracketsDelegate();
+        generatedString = bracketsDelegate.handleBrackets(generatedString);
+        generatedString = getRegExWithBackSlashesRemoved(generatedString);
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(generatedString);
@@ -33,10 +34,15 @@ public class RegExGenerator {
     }
 
     private String getRegExWithBackSlashesRemoved(String regExp) {
-        return regExp.replaceAll("\\\\", "");
+        if (shouldRemoveBackSlashes(regExp)) {
+            return regExp.replaceAll("\\\\", "");
+        }
+
+        return regExp;
     }
 
     private boolean shouldRemoveBackSlashes(String regExp) {
+        System.out.println(regExp);
         // no special characters or every spacial character escaped.
         return (validator.hasAllSpecialCharactersEscaped(regExp)
                 || !validator.hasSpecialCharacters(regExp));

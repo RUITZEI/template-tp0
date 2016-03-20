@@ -8,11 +8,6 @@ import java.util.List;
  */
 public class Patterns {
 
-    private static final String SPECIAL_CHARS_CAPTURE_ESCAPED_PATTERN = ".*\\\\([\\.\\*\\+\\?\\[\\]]).*";
-    private static final String SPECIAL_CHARS_ESCAPED_PATTERN = ".*\\\\[\\.\\*\\+\\?\\[\\]].*";
-    private static final String SPECIAL_CHARS_PATTERN = ".*[\\.\\*\\+\\?\\[\\]].*";
-    private static final String SPECIAL_CHARS_CAPTURE_PATTERN = ".*([\\.\\*\\+\\?\\[\\]]).*";
-
     private static final String SPECIAL_PREFIX = ".*[";
     private static final String SPECIAL_POSTFIX = "].*";
 
