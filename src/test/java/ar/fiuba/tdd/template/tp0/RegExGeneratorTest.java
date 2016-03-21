@@ -52,7 +52,8 @@ public class RegExGeneratorTest {
         assertTrue(validate("\\[Johhny[asd]*", 1));
         assertTrue(validate("\\[Joh\\[hn\\[y[asd]+", 1));
         assertTrue(validate("\\[Joh[a]hny[asd]+", 1));
-        assertTrue(validate("\\[Joh[asd]*h[kjds]*n[asdsda]*y[asd]+", 1));
+        assertTrue(validate("\\[J*o+h?[asd]*h[kjds]*n+a+s[asdsda]*y+[asd]+", 1));
+        assertTrue(validate("\\[J*o+h?[asd]*h.[kjds]*n\\+a+s[asdsda]*\\.y+[asd]+", 1));
     }
 
     @Test
@@ -60,10 +61,15 @@ public class RegExGeneratorTest {
         assertTrue(validate("\\@..", 1));
     }
 
-//    @Test
-//    public void testZeroOrOneCharacter() {
-//        assertTrue(validate("\\@.h?", 1));
-//    }
+    @Test
+    public void testZeroOrOneCharacter() {
+        assertTrue(validate("\\@.h?", 1));
+    }
+
+    @Test
+    public void testQuantifiers() {
+        assertTrue(validate("a+b*c", 1));
+    }
 
     @Test
     public void testCharacterSet() {

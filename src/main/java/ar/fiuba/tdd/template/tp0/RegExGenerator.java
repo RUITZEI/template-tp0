@@ -2,6 +2,7 @@ package ar.fiuba.tdd.template.tp0;
 
 import ar.fiuba.tdd.template.tp0.delegates.BracketsDelegate;
 import ar.fiuba.tdd.template.tp0.delegates.DotDelegate;
+import ar.fiuba.tdd.template.tp0.delegates.QuantifiersDelegate;
 import ar.fiuba.tdd.template.tp0.validator.Validator;
 
 import java.util.ArrayList;
@@ -36,10 +37,15 @@ public class RegExGenerator {
             DotDelegate dotDelegate = new DotDelegate();
             generatedString = dotDelegate.handleDot(generatedString);
 
+            QuantifiersDelegate quantifiersDelegate = new QuantifiersDelegate();
+            generatedString = quantifiersDelegate.handle(generatedString);
+
             if (shouldRemoveBackSlashes(generatedString)) {
                 generatedString = getRegExWithBackSlashesRemoved(generatedString);
             }
         }
+
+        System.out.println("GENERATED STRING " + generatedString);
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(generatedString);
