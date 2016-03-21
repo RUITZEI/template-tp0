@@ -1,11 +1,10 @@
 package ar.fiuba.tdd.template.tp0.delegates;
 
 import ar.fiuba.tdd.template.tp0.exceptions.BracketContainsSpecialCharsException;
-import ar.fiuba.tdd.template.tp0.utils.CharUtils;
 import ar.fiuba.tdd.template.tp0.utils.RandomChar;
 import ar.fiuba.tdd.template.tp0.validator.Validator;
 
-import static ar.fiuba.tdd.template.tp0.utils.CharUtils.getCharacterPosition;
+import static ar.fiuba.tdd.template.tp0.utils.CharUtils.getUnescapedCharacterPosition;
 
 /**
  *  [...] means that we've got to pick any of the characters inside it and replace the whole thing
@@ -40,16 +39,16 @@ public class BracketsDelegate {
     }
 
     // We're able to handle the regexp if and only if there are two non-escaped brackets
-    public boolean canHandle(String regExp) {
-        int openingBracketIndex = getCharacterPosition(regExp, '[');
-        int closingBracketIndex = getCharacterPosition(regExp, ']');
+    private boolean canHandle(String regExp) {
+        int openingBracketIndex = getUnescapedCharacterPosition(regExp, '[');
+        int closingBracketIndex = getUnescapedCharacterPosition(regExp, ']');
 
         return (openingBracketIndex >= 0 && closingBracketIndex > 0)
                 && (closingBracketIndex > openingBracketIndex);
     }
 
     // We should always keep it minimum -> asteriscs should become a 0x
-    public String handleQuantifier(String regExp, String bracketSentence) {
+    private String handleQuantifier(String regExp, String bracketSentence) {
         char quantifier = getQuantifier(regExp, stringWithbrackets(bracketSentence));
 
         if (quantifier == '*') {
@@ -61,20 +60,20 @@ public class BracketsDelegate {
         return replaceBracketSentenceWithChar(regExp, bracketSentence);
     }
 
-    public String handleAsterisk(String regExp, String bracketSentence) {
+    private String handleAsterisk(String regExp, String bracketSentence) {
         StringBuilder sb = new StringBuilder(regExp);
         sb.deleteCharAt(getExtraBracketSentenceCharPosition(regExp, stringWithbrackets(bracketSentence)) - 1);
         regExp = sb.toString();
         return replaceBracketSentenceWithChar(regExp, bracketSentence);
     }
 
-    public String deleteCharAt(String regExp, int position) {
+    private String deleteCharAt(String regExp, int position) {
         StringBuilder sb = new StringBuilder(regExp);
         sb.deleteCharAt(position);
         return sb.toString();
     }
 
-    public String replaceBracketSentenceWithChar(String regExp, String bracketSentence) {
+    private String replaceBracketSentenceWithChar(String regExp, String bracketSentence) {
         char character = RandomChar.getRandomCharFromString(bracketSentence);
         String regex = replace(regExp,
                 stringWithbrackets(bracketSentence),
@@ -87,27 +86,27 @@ public class BracketsDelegate {
     }
 
     // the String.replace() would replace all of the occurences.
-    public String replace(String regex, String strinWithBrackets, String character) {
+    private String replace(String regex, String strinWithBrackets, String character) {
         int index = regex.indexOf(strinWithBrackets);
         String returning = regex.substring(0, index) + character + regex.substring(index + strinWithBrackets.length());
         return returning;
     }
 
 
-    public String handleNoQuantifier(String regExp, String bracketSentence) {
+    private String handleNoQuantifier(String regExp, String bracketSentence) {
         return replace(regExp,
                 stringWithbrackets(bracketSentence),
                 Character.toString(RandomChar.getRandomCharFromString(bracketSentence)));
     }
 
-    public String stringWithbrackets(String bracketSentence) {
+    private String stringWithbrackets(String bracketSentence) {
         return "[" + bracketSentence + "]";
     }
 
 
-    public String getFirstStringBetweenBrackets(String regExp) throws BracketContainsSpecialCharsException {
-        int openingBracketIndex = getCharacterPosition(regExp, '[');
-        int closingBracketIndex = getCharacterPosition(regExp, ']');
+    private String getFirstStringBetweenBrackets(String regExp) throws BracketContainsSpecialCharsException {
+        int openingBracketIndex = getUnescapedCharacterPosition(regExp, '[');
+        int closingBracketIndex = getUnescapedCharacterPosition(regExp, ']');
 
         String betweenBrackets = regExp.substring(openingBracketIndex + 1, closingBracketIndex);
         System.out.println(betweenBrackets);
@@ -122,18 +121,18 @@ public class BracketsDelegate {
     }
 
     // Should receive the sentence with the brackets!
-    public char getQuantifier(String regExp, String bracketSentence) {
+    private char getQuantifier(String regExp, String bracketSentence) {
         return regExp.charAt(getExtraBracketSentenceCharPosition(regExp, bracketSentence) - 1);
     }
 
     // Might have quantifier when there's a char proceding the sentence
-    public boolean mightHaveQuantifier(String regExp, String bracketSentence) {
+    private boolean mightHaveQuantifier(String regExp, String bracketSentence) {
         return ( getExtraBracketSentenceCharPosition(regExp, stringWithbrackets(bracketSentence)) - 1 ) > 0;
     }
 
 
     // Should receive the sentence with the brackets!
-    public int getExtraBracketSentenceCharPosition(String regExp, String bracketSentence) {
+    private int getExtraBracketSentenceCharPosition(String regExp, String bracketSentence) {
         int bracketStart = regExp.indexOf(bracketSentence);
 
         int returningIndex = bracketStart + bracketSentence.length() + 1;
@@ -141,9 +140,5 @@ public class BracketsDelegate {
             return -1;
         }
         return returningIndex;
-    }
-
-    private int getReturningValue(int realPosition, int relativePosition) {
-        return relativePosition < 0 ? relativePosition : realPosition;
     }
 }

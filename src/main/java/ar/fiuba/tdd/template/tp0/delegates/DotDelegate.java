@@ -3,7 +3,7 @@ package ar.fiuba.tdd.template.tp0.delegates;
 import ar.fiuba.tdd.template.tp0.utils.CharUtils;
 import ar.fiuba.tdd.template.tp0.utils.RandomChar;
 
-import static ar.fiuba.tdd.template.tp0.utils.CharUtils.getCharacterPosition;
+import static ar.fiuba.tdd.template.tp0.utils.CharUtils.getUnescapedCharacterPosition;
 
 /**
  * Created by RUITZEI on 20/03/2016.
@@ -17,7 +17,7 @@ public class DotDelegate {
 
         while (shouldKeepGoing) {
             System.out.println("Should keep going");
-            int position = getCharacterPosition(regExp, '.');
+            int position = getUnescapedCharacterPosition(regExp, '.');
             boolean mightHaveQuantifier = (position > 0) && (position < regExp.length() - 1);
 
             if (mightHaveQuantifier) {
@@ -33,12 +33,12 @@ public class DotDelegate {
         return regExp;
     }
 
-    public boolean canHandle(String regExp) {
-        int position = CharUtils.getCharacterPosition(regExp, '.');
+    private boolean canHandle(String regExp) {
+        int position = CharUtils.getUnescapedCharacterPosition(regExp, '.');
         return (position >= 0 );
     }
 
-    public String handleQuantifier(String regExp, int position) {
+    private String handleQuantifier(String regExp, int position) {
         char quantifier = regExp.charAt(position + 1);
 
         if (quantifier == '*') {
@@ -52,19 +52,19 @@ public class DotDelegate {
 
     }
 
-    public String handleNoQuantifier(String regexp, int position) {
+    private String handleNoQuantifier(String regexp, int position) {
         return regexp.substring(0, position) + RandomChar.getRandomChar() + regexp.substring( position + 1);
     }
 
-    public String handleAsterisk(String regExp, int position) {
+    private String handleAsterisk(String regExp, int position) {
         return abstractHandle(regExp, position, 1);
     }
 
-    public String handlePlus(String regExp, int position) {
+    private String handlePlus(String regExp, int position) {
         return abstractHandle(regExp, position, NUMBER);
     }
 
-    public String abstractHandle(String regExp, int position, int times) {
+    private String abstractHandle(String regExp, int position, int times) {
         // Getting the dot + quantifier.
         String subString = regExp.substring(position, position + 1);
         System.out.println("handle substring: " + subString);
