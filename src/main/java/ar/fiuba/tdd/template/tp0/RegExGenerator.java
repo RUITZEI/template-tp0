@@ -24,34 +24,38 @@ public class RegExGenerator {
         if (numberOfResults < maxLength) {
             System.out.println("Number of results: " + numberOfResults);
         }
-        String generatedString = regEx;
-        ExceptionsDelegate exceptionsDelegate = new ExceptionsDelegate();
-        exceptionsDelegate.handle(regEx);
-        boolean shouldContinue = true;
 
-        if (shouldRemoveBackSlashes(regEx)) {
-            generatedString = getRegExWithBackSlashesRemoved(regEx);
-            System.out.println("Should remove back slashes");
-            shouldContinue = false;
-        }
-        if (shouldContinue) {
-            generatedString = delegatesManager.handleRegularExpression(generatedString);
 
-            if (shouldRemoveBackSlashes(generatedString)) {
-                generatedString = getRegExWithBackSlashesRemoved(generatedString);
-            }
-        }
-
-        System.out.println("GENERATED STRING " + generatedString);
-
+        String generatedString = getHandledString(regEx);
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add(generatedString);
 
         return arrayList;
     }
 
+    private String getHandledString(String regEx) {
+        String generatedString = regEx;
+
+        ExceptionsDelegate exceptionsDelegate = new ExceptionsDelegate();
+        exceptionsDelegate.handle(regEx);
+
+        if (shouldRemoveBackSlashes(regEx)) {
+            return getRegExWithBackSlashesRemoved(regEx);
+        }
+
+        generatedString = delegatesManager.handleRegularExpression(generatedString);
+
+        if (shouldRemoveBackSlashes(generatedString)) {
+            generatedString = getRegExWithBackSlashesRemoved(generatedString);
+        }
+
+        System.out.println("GENERATED STRING " + generatedString);
+
+        return generatedString;
+    }
+
     private String getRegExWithBackSlashesRemoved(String regExp) {
-            return regExp.replaceAll("\\\\", "");
+        return regExp.replaceAll("\\\\", "");
     }
 
     private boolean shouldRemoveBackSlashes(String regExp) {
