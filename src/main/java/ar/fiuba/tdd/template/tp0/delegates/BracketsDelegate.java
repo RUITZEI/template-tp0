@@ -1,6 +1,6 @@
 package ar.fiuba.tdd.template.tp0.delegates;
 
-import ar.fiuba.tdd.template.tp0.exceptions.BracketContainsSpecialCharsException;
+import ar.fiuba.tdd.template.tp0.exceptions.UnsupportedRegexExpression;
 import ar.fiuba.tdd.template.tp0.utils.RandomChar;
 import ar.fiuba.tdd.template.tp0.validator.Validator;
 
@@ -18,21 +18,16 @@ public class BracketsDelegate {
         boolean shouldKeepGoing = canHandle(regExp);
 
         while (shouldKeepGoing) {
-            try {
-                String onBracketsString = getFirstStringBetweenBrackets(regExp);
+            String onBracketsString = getFirstStringBetweenBrackets(regExp);
 
-                if (mightHaveQuantifier(regExp, onBracketsString)) {
-                    regExp = handleQuantifier(regExp, onBracketsString);
-                    shouldKeepGoing = canHandle(regExp);
-                } else {
-                    regExp = handleNoQuantifier(regExp, onBracketsString);
-                    shouldKeepGoing = false;
-                }
-
-            } catch (BracketContainsSpecialCharsException e) {
+            if (mightHaveQuantifier(regExp, onBracketsString)) {
+                regExp = handleQuantifier(regExp, onBracketsString);
+                shouldKeepGoing = canHandle(regExp);
+            } else {
+                regExp = handleNoQuantifier(regExp, onBracketsString);
                 shouldKeepGoing = false;
-                e.printStackTrace();
             }
+
         }
 
         return regExp;
@@ -104,7 +99,7 @@ public class BracketsDelegate {
     }
 
 
-    private String getFirstStringBetweenBrackets(String regExp) throws BracketContainsSpecialCharsException {
+    private String getFirstStringBetweenBrackets(String regExp) {
         int openingBracketIndex = getUnescapedCharacterPosition(regExp, '[');
         int closingBracketIndex = getUnescapedCharacterPosition(regExp, ']');
 
@@ -114,7 +109,7 @@ public class BracketsDelegate {
         Validator validator = new Validator();
 
         if (validator.hasSpecialCharacters(betweenBrackets)) {
-            throw new BracketContainsSpecialCharsException("Can't have special characters between two brackets");
+            throw new UnsupportedRegexExpression("Can't have special characters between two brackets");
         }
 
         return betweenBrackets;

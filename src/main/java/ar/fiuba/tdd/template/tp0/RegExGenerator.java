@@ -1,9 +1,6 @@
 package ar.fiuba.tdd.template.tp0;
 
-import ar.fiuba.tdd.template.tp0.delegates.BracketsDelegate;
-import ar.fiuba.tdd.template.tp0.delegates.DelegatesManager;
-import ar.fiuba.tdd.template.tp0.delegates.DotDelegate;
-import ar.fiuba.tdd.template.tp0.delegates.QuantifiersDelegate;
+import ar.fiuba.tdd.template.tp0.delegates.*;
 import ar.fiuba.tdd.template.tp0.validator.Validator;
 
 import java.util.ArrayList;
@@ -28,10 +25,13 @@ public class RegExGenerator {
             System.out.println("Number of results: " + numberOfResults);
         }
         String generatedString = regEx;
+        ExceptionsDelegate exceptionsDelegate = new ExceptionsDelegate();
+        exceptionsDelegate.handle(regEx);
         boolean shouldContinue = true;
 
         if (shouldRemoveBackSlashes(regEx)) {
             generatedString = getRegExWithBackSlashesRemoved(regEx);
+            System.out.println("Should remove back slashes");
             shouldContinue = false;
         }
         if (shouldContinue) {

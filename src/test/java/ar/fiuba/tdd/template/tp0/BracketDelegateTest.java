@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.template.tp0;
 
 import ar.fiuba.tdd.template.tp0.delegates.BracketsDelegate;
+import ar.fiuba.tdd.template.tp0.exceptions.UnsupportedRegexExpression;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
