@@ -1,6 +1,7 @@
 package ar.fiuba.tdd.template.tp0;
 
 import ar.fiuba.tdd.template.tp0.delegates.BracketsDelegate;
+import ar.fiuba.tdd.template.tp0.delegates.DelegatesManager;
 import ar.fiuba.tdd.template.tp0.delegates.DotDelegate;
 import ar.fiuba.tdd.template.tp0.delegates.QuantifiersDelegate;
 import ar.fiuba.tdd.template.tp0.validator.Validator;
@@ -12,14 +13,17 @@ public class RegExGenerator {
 
     private int maxLength;
     private Validator validator;
+    private DelegatesManager delegatesManager;
 
     public RegExGenerator(int maxLength) {
         this.maxLength = maxLength;
         this.validator = new Validator();
+        this.delegatesManager = new DelegatesManager();
     }
 
     // TODO: Uncomment parameters
     public List<String> generate(String regEx, int numberOfResults) {
+
         if (numberOfResults < maxLength) {
             System.out.println("Number of results: " + numberOfResults);
         }
@@ -31,14 +35,7 @@ public class RegExGenerator {
             shouldContinue = false;
         }
         if (shouldContinue) {
-            BracketsDelegate bracketsDelegate = new BracketsDelegate();
-            generatedString = bracketsDelegate.handleBrackets(generatedString);
-
-            DotDelegate dotDelegate = new DotDelegate();
-            generatedString = dotDelegate.handleDot(generatedString);
-
-            QuantifiersDelegate quantifiersDelegate = new QuantifiersDelegate();
-            generatedString = quantifiersDelegate.handle(generatedString);
+            generatedString = delegatesManager.handleRegularExpression(generatedString);
 
             if (shouldRemoveBackSlashes(generatedString)) {
                 generatedString = getRegExWithBackSlashesRemoved(generatedString);
