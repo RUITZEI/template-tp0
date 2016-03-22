@@ -18,18 +18,14 @@ public class RegExGenerator {
         this.delegatesManager = new DelegatesManager();
     }
 
-    // TODO: Uncomment parameters
+
     public List<String> generate(String regEx, int numberOfResults) {
-
-        if (numberOfResults < maxLength) {
-            System.out.println("Number of results: " + numberOfResults);
-        }
-
-
-        String generatedString = getHandledString(regEx);
         ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add(generatedString);
 
+        for (int i = 0; i < numberOfResults; i++) {
+            String generatedString = getHandledString(regEx);
+            arrayList.add(generatedString);
+        }
         return arrayList;
     }
 
@@ -37,7 +33,7 @@ public class RegExGenerator {
         String generatedString = regEx;
 
         ExceptionsDelegate exceptionsDelegate = new ExceptionsDelegate();
-        exceptionsDelegate.handle(regEx);
+        exceptionsDelegate.handle(regEx, maxLength);
 
         if (shouldRemoveBackSlashes(regEx)) {
             return getRegExWithBackSlashesRemoved(regEx);
@@ -49,8 +45,6 @@ public class RegExGenerator {
             generatedString = getRegExWithBackSlashesRemoved(generatedString);
         }
 
-        System.out.println("GENERATED STRING " + generatedString);
-
         return generatedString;
     }
 
@@ -59,7 +53,6 @@ public class RegExGenerator {
     }
 
     private boolean shouldRemoveBackSlashes(String regExp) {
-        System.out.println(regExp);
         // no special characters or every spacial character escaped.
         return (validator.hasAllSpecialCharactersEscaped(regExp)
                 || !validator.hasSpecialCharacters(regExp));

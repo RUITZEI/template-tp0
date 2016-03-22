@@ -3,6 +3,8 @@ package ar.fiuba.tdd.template.tp0.delegates;
 import ar.fiuba.tdd.template.tp0.utils.CharUtils;
 import ar.fiuba.tdd.template.tp0.utils.RandomChar;
 
+import java.util.Random;
+
 import static ar.fiuba.tdd.template.tp0.utils.CharUtils.getUnescapedCharacterPosition;
 
 /**
@@ -12,17 +14,20 @@ public class DotDelegate {
 
     private static final Integer NUMBER = 5;
 
+    private Random random;
+
+    public DotDelegate() {
+        this.random = new Random();
+    }
+
     public String handleDot(String regExp) {
         boolean shouldKeepGoing = canHandle(regExp);
 
         while (shouldKeepGoing) {
-            System.out.println("Should keep going");
             int position = getUnescapedCharacterPosition(regExp, '.');
-            boolean mightHaveQuantifier = (position > 0) && (position < regExp.length() - 1);
+            boolean mightHaveQuantifier = (position >= 0) && (position < regExp.length() - 1);
 
             if (mightHaveQuantifier) {
-                System.out.println("Might have quantifier");
-
                 regExp = handleQuantifier(regExp, position);
                 shouldKeepGoing = canHandle(regExp);
             } else {
@@ -47,7 +52,6 @@ public class DotDelegate {
             return handlePlus(regExp, position);
         }
 
-        System.out.println("had no quantifier");
         return handleNoQuantifier(regExp, position);
 
     }
@@ -61,14 +65,12 @@ public class DotDelegate {
     }
 
     private String handlePlus(String regExp, int position) {
-        return abstractHandle(regExp, position, NUMBER);
+        // don't wanna get a 0 here.
+        return abstractHandle(regExp, position, random.nextInt(NUMBER) + 1);
     }
 
     private String abstractHandle(String regExp, int position, int times) {
         // Getting the dot + quantifier.
-        String subString = regExp.substring(position, position + 1);
-        System.out.println("handle substring: " + subString);
-        //TODO :
         String charactersToAdd = getCharactersToAdd(times);
         String returning = regExp.substring(0,position) + charactersToAdd + regExp.substring(position + 2);
         return returning;

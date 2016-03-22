@@ -7,14 +7,14 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 public class RegExGeneratorTest {
 
+    private static final int MAX_CHARACTERS = 60;
+
     private boolean validate(String regEx, int numberOfResults) {
-        RegExGenerator generator = new RegExGenerator(10);
-        // TODO: Uncomment parameters
+        RegExGenerator generator = new RegExGenerator(MAX_CHARACTERS);
 
         List<String> results = generator.generate(regEx, numberOfResults);
         // force matching the beginning and the end of the strings
@@ -37,6 +37,12 @@ public class RegExGeneratorTest {
     @Test(expected = UnsupportedRegexExpression.class)
     public void testShouldThrowExceptionIfHasUnescapedParenthesis() {
         assertTrue(validate("(123)", 1));
+    }
+
+    @Test(expected = UnsupportedRegexExpression.class)
+    public void testShouldThrowExceptionIfRegexIsTooLong() {
+        String longString = "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa";
+        assertTrue(validate(longString, 1));
     }
 
     @Test
@@ -80,6 +86,11 @@ public class RegExGeneratorTest {
     @Test
     public void testLiteralDotCharacter() {
         assertTrue(validate("\\@..", 1));
+    }
+
+    @Test
+    public void testDotCharacter() {
+        assertTrue(validate(".+", 1));
     }
 
     @Test

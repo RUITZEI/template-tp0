@@ -24,7 +24,6 @@ public class QuantifiersDelegate {
             sb.deleteCharAt(index);
             regExp = sb.toString();
 
-            System.out.println("Removed one " + character);
             index = CharUtils.getUnescapedCharacterPosition(regExp, character);
         }
 

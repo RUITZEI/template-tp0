@@ -104,7 +104,6 @@ public class BracketsDelegate {
         int closingBracketIndex = getUnescapedCharacterPosition(regExp, ']');
 
         String betweenBrackets = regExp.substring(openingBracketIndex + 1, closingBracketIndex);
-        System.out.println(betweenBrackets);
 
         Validator validator = new Validator();
 

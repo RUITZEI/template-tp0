@@ -8,12 +8,16 @@ import ar.fiuba.tdd.template.tp0.utils.CharUtils;
  */
 public class ExceptionsDelegate {
 
-    public String handle(String regExp) {
+    public String handle(String regExp, int maxLength) {
         int openingIndex = CharUtils.getUnescapedCharacterPosition(regExp, '(');
         int closingIndex = CharUtils.getUnescapedCharacterPosition(regExp, ')');
 
         if (openingIndex >= 0 || closingIndex >= 0) {
             throw new UnsupportedRegexExpression("Can't have parenthesis ");
+        }
+
+        if (regExp.length() > maxLength) {
+            throw new UnsupportedRegexExpression("Regexp length cant be that long");
         }
 
         return regExp;

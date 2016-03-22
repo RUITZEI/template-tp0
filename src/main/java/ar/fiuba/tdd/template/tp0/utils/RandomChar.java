@@ -8,9 +8,8 @@ import java.util.Random;
 public abstract class RandomChar {
     public static char getRandomChar() {
         Random rand = new Random();
-        char character = (char)(rand.nextInt(255) + 'a');
-
-        System.out.println("Char: " + character);
+        int randomInt = rand.nextInt(127) + 32;
+        char character = (char)(randomInt);
         return character;
     }
 
@@ -21,7 +20,6 @@ public abstract class RandomChar {
             return '\0';
         }
         int pos = rand.nextInt(string.length());
-        System.out.println("Char: " + string.charAt(pos));
 
         return string.charAt(pos);
     }
