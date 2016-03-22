@@ -56,10 +56,6 @@ public class RegExGeneratorTest {
     @Test
     public void testEscapedCharacters() {
         assertTrue(validate("\\.\\*asd", 1));
-        assertTrue(validate("\\.\\+asd", 1));
-        assertTrue(validate("\\(\\?asd", 1));
-        assertTrue(validate("\\)\\[asd", 1));
-        assertTrue(validate("\\[\\[asd.", 1));
     }
 
     @Test
